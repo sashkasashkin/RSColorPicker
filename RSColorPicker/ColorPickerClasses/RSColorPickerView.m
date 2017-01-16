@@ -307,6 +307,11 @@
     [self handleStateChanged];
 }
 
+- (void)setSelectionCircleDiameter:(CGFloat)selectionCircleDiameter {
+    _selectionCircleDiameter = selectionCircleDiameter;
+    [self sizeSelectionLayers];
+}
+
 #pragma mark - Selection Updates -
 
 - (void)handleStateChanged {
@@ -354,12 +359,6 @@
 
 - (CGFloat)paletteDiameter {
     return self.bounds.size.width;
-}
-
-- (void)setSelectionCircleDiameter:(CGFloat)selectionCircleDiameter
-{
-    _selectionCircleDiameter = selectionCircleDiameter;
-    [self sizeSelectionLayers];
 }
 
 #pragma mark - Touch Events -
