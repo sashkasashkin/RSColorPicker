@@ -131,18 +131,16 @@
     // Show or hide the loupe. Default: show.
     self.showLoupe = YES;
     self.opaque = YES;
+    self.selectionCircleDiameter = kSelectionViewSize;
+    
     self.backgroundColor = [UIColor clearColor];
 
     _colorPickerViewFlags.bitmapNeedsUpdate = NO;
 
     // the view used to select the colour
     self.selectionLayer = [RSSelectionLayer layer];
-    self.selectionLayer.frame = CGRectMake(0.0, 0.0, kSelectionViewSize, kSelectionViewSize);
-    [self.selectionLayer setNeedsDisplay];
-
     self.selectionColorLayer = [CALayer layer];
-    self.selectionColorLayer.cornerRadius = kSelectionViewSize / 2;
-    self.selectionColorLayer.frame = CGRectMake(0.0, 0.0, kSelectionViewSize, kSelectionViewSize);
+    [self sizeSelectionLayers];
 
     self.brightnessLayer = [CALayer layer];
     self.brightnessLayer.frame = self.bounds;
@@ -169,6 +167,15 @@
     self.contentsLayer.masksToBounds = YES;
     self.cropToCircle = NO;
     self.selectionColor = [UIColor whiteColor];
+}
+
+- (void)sizeSelectionLayers
+{
+    self.selectionLayer.frame = CGRectMake(0.0, 0.0, self.selectionCircleDiameter, self.selectionCircleDiameter);
+    [self.selectionLayer setNeedsDisplay];
+    
+    self.selectionColorLayer.cornerRadius = self.selectionCircleDiameter / 2;
+    self.selectionColorLayer.frame = CGRectMake(0.0, 0.0, self.selectionCircleDiameter, self.selectionCircleDiameter);
 }
 
 - (void)resizeOrRescale {
@@ -342,11 +349,17 @@
 #pragma mark - Metrics -
 
 - (CGFloat)paddingDistance {
-    return kSelectionViewSize / 2.0;
+    return self.selectionCircleDiameter / 2.0;
 }
 
 - (CGFloat)paletteDiameter {
     return self.bounds.size.width;
+}
+
+- (void)setSelectionCircleDiameter:(CGFloat)selectionCircleDiameter
+{
+    _selectionCircleDiameter = selectionCircleDiameter;
+    [self sizeSelectionLayers];
 }
 
 #pragma mark - Touch Events -

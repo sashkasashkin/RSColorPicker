@@ -69,6 +69,12 @@ IB_DESIGNABLE
 @property (nonatomic) BOOL showLoupe;
 
 /**
+ * The diameter of the selection circle
+ * Default: 22.
+ */
+@property (nonatomic) CGFloat selectionCircleDiameter;
+
+/**
  * The color at a given point in the color picker's bounds.
  */
 - (UIColor *)colorAtPoint:(CGPoint)point;
