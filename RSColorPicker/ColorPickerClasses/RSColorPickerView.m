@@ -95,6 +95,7 @@
 // touch handling
 - (CGPoint)validPointForTouch:(CGPoint)touchPoint;
 - (RSColorPickerState *)stateForPoint:(CGPoint)point;
+- (RSColorPickerState *)stateForColor:(UIColor *)color;
 - (void)updateStateForTouchPoint:(CGPoint)point;
 
 // metrics
@@ -256,6 +257,11 @@
     return [self stateForPoint:point].color;
 }
 
+- (CGPoint)pointAtColor:(UIColor *)color {
+    RSColorPickerState * tempState = [self stateForColor:color];
+    return [tempState selectionLocationWithSize:self.paletteDiameter padding:self.paddingDistance];
+}
+
 - (CGFloat)brightness {
     return state.brightness;
 }
@@ -303,7 +309,7 @@
 }
 
 - (void)setSelectionColor:(UIColor *)selectionColor {
-    state = [[RSColorPickerState alloc] initWithColor:selectionColor];
+    state = [self stateForColor:selectionColor];
     [self handleStateChanged];
 }
 
@@ -413,6 +419,10 @@
                                                               padding:self.paddingDistance];
     newState = [[newState stateBySettingAlpha:self.opacity] stateBySettingBrightness:self.brightness];
     return newState;
+}
+
+- (RSColorPickerState *)stateForColor:(UIColor *)color {
+    return [[RSColorPickerState alloc] initWithColor:color];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

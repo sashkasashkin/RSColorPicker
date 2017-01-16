@@ -80,6 +80,11 @@ IB_DESIGNABLE
 - (UIColor *)colorAtPoint:(CGPoint)point;
 
 /**
+ * The point at a given color in the color picker's bounds.
+ */
+- (CGPoint)pointAtColor:(UIColor *)color;
+
+/**
  * Methods that create/cache data needed to create a color picker.
  * These run async (except where noted) and can help the overall UX.
  */
